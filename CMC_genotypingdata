@@ -1,0 +1,27 @@
+
+cd /external/rprshnas01/kcni/asegura/PRS_tutorial
+
+#Modules
+module load PLINK
+module load bio/HTSlib
+
+
+#Get the raw QCed binary files
+#syn4600985, syn4600987, syn4600989
+scp /external/rprshnas01/netdata_kcni/stlab/CMC_genotypes/SNPs/Release1/QCd/CMC_MSSM-Penn-Pitt_DLPFC_DNA_IlluminaOmniExpressExome_QCed.bed genotyping_data/CMC_MSSM-Penn-Pitt_DLPFC_DNA_IlluminaOmniExpressExome_QCed.bed
+scp /external/rprshnas01/netdata_kcni/stlab/CMC_genotypes/SNPs/Release1/QCd/CMC_MSSM-Penn-Pitt_DLPFC_DNA_IlluminaOmniExpressExome_QCed.bim genotyping_data/CMC_MSSM-Penn-Pitt_DLPFC_DNA_IlluminaOmniExpressExome_QCed.bim
+scp /external/rprshnas01/netdata_kcni/stlab/CMC_genotypes/SNPs/Release1/QCd/CMC_MSSM-Penn-Pitt_DLPFC_DNA_IlluminaOmniExpressExome_QCed.fam genotyping_data/CMC_MSSM-Penn-Pitt_DLPFC_DNA_IlluminaOmniExpressExome_QCed.fam
+
+
+#Perform Michigan QC
+plink --bfile genotyping_data/CMC_MSSM-Penn-Pitt_DLPFC_DNA_IlluminaOmniExpressExome_QCed --freq --out genotyping_data/cmc_unimputed
+perl DB/HRC-1000G-check-bim.pl -b genotyping_data/CMC_MSSM-Penn-Pitt_DLPFC_DNA_IlluminaOmniExpressExome_QCed.bim -f genotyping_data/cmc_unimputed.frq -r DB/HRC.r1-1.GRCh37.wgs.mac5.sites.tab -h #sometimes the perl file has an error, I think it depends on the modules that are loaded but I couldn't figure it out	
+sh genotyping_data/Run-plink.sh
+
+#Prepare files for Michingan (.vcf.gz)
+for i in {1..22};do
+plink --bfile genotyping_data/CMC_MSSM-Penn-Pitt_DLPFC_DNA_IlluminaOmniExpressExome_QCed-updated-chr$i --recode vcf --out genotyping_data/cmc_unimputed-chr$i
+sed -i 1,6d genotyping_data/cmc_unimputed-chr$i.vcf
+sed -i '1s/^/##fileformat=VCFv4.2\n/' genotyping_data/cmc_unimputed-chr$i.vcf #vcf header needs to be changed
+bgzip genotyping_data/cmc_unimputed-chr$i.vcf
+done
