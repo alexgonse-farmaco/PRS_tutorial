@@ -1,7 +1,7 @@
 ###Retrieve imputed data, annotate and perform QC
 
 #Setting up
-module load plink/v1.7
+module load plink/v1.9
 module load R
 alias plink='plink --noweb' #to initiate plink without the --noweb flag
 
