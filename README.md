@@ -1,4 +1,4 @@
-MAIN
+###MAIN###
 
 This is a tutorial for PRS construction with PRS-CS method. This method applies a correction on the effect of risk alleles (continuous shrinkage), considering their association with the target phenotype and linkage desequilibrium score among other risk alleles. This allows the construction of PRS without the selection of a thresholding criteron or a cumpling processing.
 
@@ -24,6 +24,7 @@ Overwiew of the needed software, for our local computer (L) and for the cluster 
 - (C) PRSCS: to correct risk alleles effect
 
 
+###Access to cluster###
 For X2Go Client and filezilla cluster access the following info is required:
 - username: farmauser
 - password: b6tSqi3gztq8
@@ -31,9 +32,19 @@ For X2Go Client and filezilla cluster access the following info is required:
 - port: 22
 
 
+###Script explanation and order###
+1. imputation_formatting_QC.sh: transform raw gentoyping data for imputation server
+2. postimputation_QC.sh: download, annotate and QC imputed genotyping data
+3. sumstat_preparation_examples.R: format and QC reference summary statistics file
+4. calculate_weights_example.py: PRSCS processing for effect size correction
+5. allchr_weights.R: merge per-chromosome PRSCS processed summary statistics into a single file
+6. construct_PRS.sh: calculate PRS
+7. merge_PRS.R: create a single file with all PRS for your sample/project
 
 
-DETAILED INFO
+
+
+###DETAILED INFO###
 
 #Cluster management
 
