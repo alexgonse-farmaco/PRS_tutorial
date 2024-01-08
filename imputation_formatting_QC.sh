@@ -1,7 +1,8 @@
 ###Format and QC raw genotyping data to send to imputation server
 
 #Setting up
-module load plink/v1.7
+module load plink/v1.9
+module load bgzip #!!missing in cluster
 alias plink='plink --noweb' #to initiate plink without the --noweb flag
 
 #Variables
@@ -14,8 +15,8 @@ cd $workingdirectory
 
 #ID update and formatting
 plink --vcf $name.vcf --make-bed --out $name
-plink --bfile $name --update-id $updateid --out unimp_sexbfile #bfiles for later sex-labelled QC (requires unimputed data)
-plink --bfile $name --maf 0.01 --hwe 1e-3 --geno 0.01 --write-snplist --make-bed --out $name"QC_noimp" #bfiles for genetic PCA (for statistical analysis)
+plink --bfile $name --update-ids $updateid --make-bed --out $name #change names
+plink --bfile $name --maf 0.01 --hwe 1e-3 --geno 0.01 --write-snplist --make-bed --out $name"QC_noimp" #bfiles for later sex-labelled QC (requires unimputed data) and genetic PCA (for statistical analysis)
 plink --bfile $name"QC_noimp" --recode_vcf --out $name"QC_noimp" #vcf for genetic PCA (for statistical analysis)
 
 #Pre-imputation QC
@@ -28,7 +29,7 @@ for i in {1..22}; do
 plink --bfile $name"-updated-chr"$i --recode vcf --out $name"-chr"$i
 sed -i 1,6d $name"-chr"$i".vcf"
 sed -i '1s/^/##fileformat=VCFv4.1\n/' $name"-chr"$i".vcf"
-gzip $name"-chr"$i."vcf";
+bgzip $name"-chr"$i."vcf"; #!!missing module
 done
 
 rm TEMP* *.nosex *updated*
