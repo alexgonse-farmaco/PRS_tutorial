@@ -7,6 +7,7 @@
 #Write down Neff
 #Exclude unreliable SNPs
 #Format file for PRSCS processing
+#Upodate PRS inventory in sharepoint
 
 #Packages
 library(data.table)
