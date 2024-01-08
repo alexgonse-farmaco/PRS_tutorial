@@ -42,13 +42,15 @@ All modules have to be loaded in the terminal. Base terminal uses bash code. Use
 - conda activate alexenv: to install, execute anything in python
 - python <namescript.py>: execute .py script
 
-  
+
+
 #Genotyping files
 
 Different formats are needed to process our sample genotyping information:
 - bfiles (.bim, .fam, .bed): file trio that contain, respectively: SNP info (ID, chromosomic location, etc.), subject info (id, sex, phenotype, etc.) and a binary file that connects SNP and subject info
 - Variant Call Format (.vcf): binary file, contains all genotyping information in a single file
 - compressed gz (.vcf.gz): zipped .vcf files
+
 
 
 #Imputation
@@ -63,10 +65,12 @@ Useful information:
 - Imputation results are temporarily stored in the server
 
 
+
 #Annotation
 
 Post-imputation SNP id is formatted as CHR:BP:A1:A2. Annotation is required to switch back to SNP rsID. A reference panel is required.
 Some SNPs will be dropped due to id mismatch.
+
 
 
 #Genotyping data QC
@@ -74,6 +78,7 @@ Some SNPs will be dropped due to id mismatch.
 Imputed and annotated data is QCed to include only reliable data in the PRS. QC consists of:
 - SNP QC: possible exclusion for for MAF, missingness, HWE, heterozigosity, duplicated ids. Some steps will require SNP prunning
 - Individual QC: possible exclusion for label-sex mismatch, missingness, relatedness
+
 
 
 #Summary statistics file
@@ -100,12 +105,14 @@ Additionally, we'll need extra information for PRS-CS prcessing:
 - reference linkage desequilibrium data: we'll use the UK BioBank population as reference
 
 
+
 #PRSCS
 
 A base script is available to run PRSCS. File path, phenotype names and Neff have to be manually inserted.
 The script automatically creates per-chromosome jobs for each phenoype. There are sent to slurm. Useful slurm commands:
 - squeue: check queue and job status
 - scancel -u farmauser: cancel all sent jobs
+
 
 
 #PRS construction
