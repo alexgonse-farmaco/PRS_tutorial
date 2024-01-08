@@ -1,4 +1,4 @@
-#MAIN
+MAIN
 
 This is a tutorial for PRS construction with PRS-CS method. This method applies a correction on the effect of risk alleles (continuous shrinkage), considering their association with the target phenotype and linkage desequilibrium score among other risk alleles. This allows the construction of PRS without the selection of a thresholding criteron or a cumpling processing.
 
@@ -31,7 +31,7 @@ For X2Go Client and filezilla cluster access the following info is required:
 - port: 22
 
 
-##DETAILED INFO
+DETAILED INFO
 
 #Cluster management
 
