@@ -1,15 +1,19 @@
 ####Sumstat preparation examples
 
-#
+##Quick guide:
+#Load and check sumstats file format
+#Identify all the particularities
+#Calculate Neff if dichotomic phenotype
+#Write down Neff
+#Exclude unreliable SNPs
+#Format file for PRSCS processing
 
-setwd('/external/rprshnas01/netdata_kcni/stlab/Alex_PRS/sumstats/raw_sumstats')
-
+#Packages
 library(data.table)
 library(dplyr)
 
-
 #External MAF reference for sumstats with missing MAF info
-ref<-frPRSd("reference.1000G.maf.0.005.txt.gz") #annotate MAF from reference, lots of missing in sumstats CEUaf
+ref<-fread("/farmacologia/home/farmauser/PRS/scripts/reference.1000G.maf.0.005.txt.gz") #annotate MAF from reference, lots of missing in sumstats CEUaf
 ref<-data.frame(ref$SNP,ref$MAF)
 
 
