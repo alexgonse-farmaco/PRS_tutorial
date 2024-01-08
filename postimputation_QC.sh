@@ -31,7 +31,7 @@ done #create file for merging all chromosomes
 plink --merge-list beddosefilename --make-bed --out $namei
 
 
-#Annotate CHR:bp:A1:A2 to rsID
+#Annotate CHR:BP:A1:A2 to rsID
 plink --bfile $namei --recode-vcf --out $namei
 bgzip $namei.vcf
 tabix $namei.vcf.gz
