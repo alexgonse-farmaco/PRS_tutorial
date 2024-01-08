@@ -34,6 +34,7 @@ For X2Go Client and filezilla cluster access the following info is required:
 ##DETAILED INFO
 
 #Cluster management
+
 All modules have to be loaded in the terminal. Base terminal uses bash code. Useful commands:
 - module avail: see all available modules. These can only be installed by the master user (not us)
 - module load <modulename>: load module before using it
@@ -44,6 +45,7 @@ All modules have to be loaded in the terminal. Base terminal uses bash code. Use
 
   
 #Genotyping files
+
 Different formats are needed to process our sample genotyping information:
 - bfiles (.bim, .fam, .bed): file trio that contain, respectively: SNP info (ID, chromosomic location, etc.), subject info (id, sex, phenotype, etc.) and a binary file that connects SNP and subject info
 - Variant Call Format (.vcf): binary file, contains all genotyping information in a single file
@@ -51,6 +53,7 @@ Different formats are needed to process our sample genotyping information:
 
 
 #Imputation
+
 Optional and highly recommended step to infer genotype information from non-genotiped SNPs. Available at https://imputationserver.sph.umich.edu/index.html#!
 Useful information:
 - Sign in is required
@@ -62,17 +65,20 @@ Useful information:
 
 
 #Annotation
+
 Post-imputation SNP id is formatted as CHR:BP:A1:A2. Annotation is required to switch back to SNP rsID. A reference panel is required.
 Some SNPs will be dropped due to id mismatch.
 
 
 #Genotyping data QC
+
 Imputed and annotated data is QCed to include only reliable data in the PRS. QC consists of:
 - SNP QC: possible exclusion for for MAF, missingness, HWE, heterozigosity, duplicated ids. Some steps will require SNP prunning
 - Individual QC: possible exclusion for label-sex mismatch, missingness, relatedness
 
 
 #Summary statistics file
+
 This file contains the per-SNP p-value, associated effect on the phenotyope (odds ratio/beta values) among other data. This raw file has to be formatted processed by PRS-CS
 
 Keep in mind that summary statistic files come from published articles. Although highly recommended, summary statistics data is not always publicly available. There is no standard format to report summary statistica, so we'll have to consider each file's particularities.
@@ -96,6 +102,7 @@ Additionally, we'll need extra information for PRS-CS prcessing:
 
 
 #PRSCS
+
 A base script is available to run PRSCS. File path, phenotype names and Neff have to be manually inserted.
 The script automatically creates per-chromosome jobs for each phenoype. There are sent to slurm. Useful slurm commands:
 - squeue: check queue and job status
@@ -103,4 +110,5 @@ The script automatically creates per-chromosome jobs for each phenoype. There ar
 
 
 #PRS construction
+
 Once all the above is ready, PRS can be constructed with plink. Additional scripts are provided to construct a single .txt file with the per-individual per-phenotype PRS
