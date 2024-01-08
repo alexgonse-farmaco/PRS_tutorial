@@ -31,6 +31,8 @@ For X2Go Client and filezilla cluster access the following info is required:
 - port: 22
 
 
+
+
 DETAILED INFO
 
 #Cluster management
