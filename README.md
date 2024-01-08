@@ -23,28 +23,52 @@ Overwiew of the needed software, for our local computer (L) and for the cluster 
 - (C) PRSCS: to correct risk alleles effect
 
 
+For X2Go Client and filezilla cluster access the following info is required:
+- username: farmauser
+- password: b6tSqi3gztq8
+- client number: 161.116.221.75
+- port: 22
+
+
 ##DETAILED INFO
 
+#Cluster management
+All modules have to be loaded in the terminal. Base terminal uses bash code. Useful commands:
+- module avail: see all available modules. These can only be installed by the master user (not us)
+- module load <modulename>: load module before using it
+- R: execute R. The terminal will only recognize R coding
+      - quit() / n: to return to bash terminal
+- conda activate alexenv: to install, execute anything in python
+- python <namescript.py>: execute .py script
+
+  
 #Genotyping files
 Different formats are needed to process our sample genotyping information:
 - bfiles (.bim, .fam, .bed): file trio that contain, respectively: SNP info (ID, chromosomic location, etc.), subject info (id, sex, phenotype, etc.) and a binary file that connects SNP and subject info
 - Variant Call Format (.vcf): binary file, contains all genotyping information in a single file
 - compressed gz (.vcf.gz): zipped .vcf files
 
-Some processes/software require a specific format
-
 
 #Imputation
 Optional and highly recommended step to infer genotype information from non-genotiped SNPs. Available at https://imputationserver.sph.umich.edu/index.html#!
-
 Useful information:
 - Sign in is required
 - Pre-QC is mandatory. QC script is provided
 - Input files are per-chromosome .vcf.gz
 - Reference panel/array build have to match the sample's
 - Refrence population selection is required
+- Imputation results are temporarily stored in the server
 
 
+#Annotation
+Post-imputation SNP id is formatted as CHR:BP:A1:A2. Annotation is required to switch back to SNP rsID. A reference panel is required.
+Some SNPs will be dropped due to id mismatch.
+
+
+#Genotyping data QC
+Imputed and annotated data is QCed to include only reliable data in the PRS. QC consists of:
+- SNP QC: possible exclusion for for MAF, missingness, HWE, heterozigosity, duplicated ids. Some steps will require SNP prunning
+- Individual QC: possible exclusion for label-sex mismatch, missingness, relatedness
 
 
 #Summary statistics file
@@ -58,9 +82,10 @@ Useful repositories to obtain GWAS summary statistics:
 - Genetic Investigation of ANthropometric Traits consortium: https://portals.broadinstitute.org/collaboration/giant/index.php/GIANT_consortium_data_files
 
 Summarizing, we'll need the following data from the summary statistics file:
-- SNP id: with rs code
+- SNP id: with rsID
 - Minor Allele Frequency: to exclude MAF<0.01. If missing, we can estimate MAFs with a reference file
 - OR/beta: effect value for dichotomic/continuous phonotypes
+- Major/minor allele: to identify risk allele and exclude indels and non-binary polymorphisms
 
 Additionally, we'll need extra information for PRS-CS prcessing:
 - Sample size: found in the article text
@@ -69,4 +94,12 @@ Additionally, we'll need extra information for PRS-CS prcessing:
 - reference linkage desequilibrium data: we'll use the UK BioBank population as reference
 
 
-#
+#PRSCS
+A base script is available to run PRSCS. File path, phenotype names and Neff have to be manually inserted.
+The script automatically creates per-chromosome jobs for each phenoype. There are sent to slurm. Useful slurm commands:
+- squeue: check queue and job status
+- scancel -u farmauser: cancel all sent jobs
+
+
+#PRS construction
+Once all the above is ready, PRS can be constructed with plink. Additional scripts are provided to construct a single .txt file with the per-individual per-phenotype PRS
