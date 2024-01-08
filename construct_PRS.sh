@@ -1,4 +1,4 @@
-###For each phenotype, create PRS
+###For each phenotype, create sscore files
 
 module load plink/v2.0
 sample=samplename
