@@ -39,8 +39,8 @@ All modules have to be loaded in the terminal. Base terminal uses bash code. Use
 - module avail: see all available modules. These can only be installed by the master user (not us)
 - module load <modulename>: load module before using it
 - R: execute R. The terminal will only recognize R coding
--     quit()
--     n: to return to bash terminal
+       quit()
+      n: to return to bash terminal
 - conda activate alexenv: to install, execute anything in python
 - python <namescript.py>: execute .py script
 
