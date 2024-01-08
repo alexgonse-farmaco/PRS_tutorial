@@ -18,7 +18,7 @@ ref<-data.frame(ref$SNP,ref$MAF)
 
 
 #Example 1: SZ; dichotomic, Freq but no MAF
-PRS=frPRSd("PGC3_SCZ_wave3.europPRSn.autosome.public.v3.vcf.tsv.gz")
+PRS=frPRSd("/farmacologia/home/farmauser/PRS/sumstats_raw/PGC3_SCZ_wave3.europPRSn.autosome.public.v3.vcf.tsv.gz")
 PRS$Freq=(PRS$FCAS*PRS$NCAS+PRS$FCON*PRS$NCON)/(PRS$NCAS+PRS$NCON) #calculate Freq as an average from cases and controls
 PRS$MAF<-ifelse(PRS$Freq > .5, 1-PRS$Freq, PRS$Freq) #convert Freq to MAF. Just to filter out low MAF SNPs
 
@@ -38,7 +38,7 @@ fwrite(PRS, file = "/farmacologia/home/farmauser/PRS/sumstats_QCed/SZ.sumstats",
 
 
 #Example 2: BD; dichotomic, no MAF or Freq, weird colnames
-PRS=frPRSd("pgc.bip.full.2012-04.txt.gz")
+PRS=frPRSd("/farmacologia/home/farmauser/PRS/sumstats_raw/pgc.bip.full.2012-04.txt.gz")
 colnames(PRS)=c("SNP","CHR","BP","A1","A2","OR","SE","P","INFO","NGT","CEUaf")
 
 PRS<-inner_join(PRS,ref,by="SNP",all=F) #get MAF from external reference
@@ -56,7 +56,7 @@ fwrite(PRS, file = "/farmacologia/home/farmauser/PRS/sumstats_QCed/BD.sumstats",
 
 
 #Example 3: IQ; continuous, Freq but no MAF; alleles in lowercase
-PRS<-fread("SavageJansen_2018_intelligence_metaanalysis.txt")
+PRS<-fread("/farmacologia/home/farmauser/PRS/sumstats_raw/SavageJansen_2018_intelligence_metaanalysis.txt")
 PRS$MAF<-ifelse(PRS$EAF_HRC > .5, 1-PRS$EAF_HRC, PRS$EAF_HRC) #convert Freq to MAF
 
 PRS$A1=toupper(PRS$A1) #transform lowercase to uppercase
