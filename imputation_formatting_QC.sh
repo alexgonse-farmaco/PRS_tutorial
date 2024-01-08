@@ -8,12 +8,12 @@ alias plink='plink --noweb' #to initiate plink without the --noweb flag
 name=example #sample/project name
 updateid=updateid.txt #file to update id, if necessary. Format: oldIID oldFID newIID newFID
 updatesex=updatesex.txt #file to update id, if necessary. Format: IID FID sex (coded 1/2/0 for M/F/missing)
-workingdirectory=/farmacologia/home/farmauser/PRS/workingdirectory #to store all intermediate files
+workingdirectory=/farmacologia/home/farmauser/PRS/tutorial_files #to store all intermediate files
 
 cd $workingdirectory
 
 #ID update and formatting
-plink --vcf $name --make-bed --out $name
+plink --vcf $name.vcf --make-bed --out $name
 plink --bfile $name --update-id $updateid --out unimp_sexbfile #bfiles for later sex-labelled QC (requires unimputed data)
 plink --bfile $name --maf 0.01 --hwe 1e-3 --geno 0.01 --write-snplist --make-bed --out $name"QC_noimp" #bfiles for genetic PCA (for statistical analysis)
 plink --bfile $name"QC_noimp" --recode_vcf --out $name"QC_noimp" #vcf for genetic PCA (for statistical analysis)
