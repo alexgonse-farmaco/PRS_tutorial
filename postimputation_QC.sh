@@ -9,8 +9,8 @@ alias plink='plink --noweb' #to initiate plink without the --noweb flag
 namei=example_imp #sample/project name imputed
 nameqc=example_QC #sample/project name QCed
 nameok=example_OK #sample/project name ready for PRS construction
-psw=password #set password sent by server
-workingdirectory=/farmacologia/home/farmauser/PRS/workingdirectory #to store all intermediate files
+psw='vkJG=JG0:zi7dA' #set password sent by server
+workingdirectory=/farmacologia/home/farmauser/PRS/tutorial_files #to store all intermediate files
 
 cd $workingdirectory
 
@@ -20,7 +20,7 @@ cd $workingdirectory
 #Unzip and format imputed data
 for i in {1..22}; do
 unzip -P $psw -o chr_$i.zip
-gzip -d chr$i.dose.vcf.gz > chr$i.dose.vcf
+gzip -d -f chr$i.dose.vcf.gz > chr$i.dose.vcf
 plink --vcf chr$i.dose.vcf --make-bed --out chr$i.dose
 done #unzip, ungzip, transfrom to bfiles
 
