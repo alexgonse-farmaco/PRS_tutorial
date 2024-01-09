@@ -16,8 +16,9 @@ cd $workingdirectory
 #ID update and formatting
 plink --vcf $name.vcf --make-bed --out $name
 plink --bfile $name --update-ids $updateid --make-bed --out $name #change names
-plink --bfile $name --maf 0.01 --hwe 1e-3 --geno 0.01 --write-snplist --make-bed --out $name"QC_noimp" #bfiles for later sex-labelled QC (requires unimputed data) and genetic PCA (for statistical analysis)
-plink --bfile $name"QC_noimp" --recode_vcf --out $name"QC_noimp" #vcf for genetic PCA (for statistical analysis)
+plink --bfile $name --maf 0.01 --hwe 1e-3 --geno 0.01 --write-snplist --recode-vcf --out $name"QC_noimp" #vcf for genetic PCA (for statistical analysis)
+plink --bfile $name --update-sex $updatesex --make-bed --out $name"_sexqc" #bfiles for later sex-labelled QC (requires unimputed data) and genetic PCA (for statistical analysis)
+
 
 #Pre-imputation QC
 plink --bfile $name --freq --out $name
