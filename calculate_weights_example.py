@@ -43,14 +43,16 @@ def run_slurm(cmd, job_name, time, log_file='/dev/null', num_threads=1,
 
 #sumstats
 sumstats = {
-  'Monocytes': '/sumstats_QCed/Monocytes.sumstats',
-  'Lymphocytes': '/sumstats_QCed/Lymphocytes.sumstats',
+  'SZexample': '/sumstats_QCed/SZexample.sumstats',
+  'BDexample': '/sumstats_QCed/BDexample.sumstats',
+  'IQexample': '/sumstats_QCed/IQexample.sumstats',
 }
 
 # Get N for each GWAS
 N = {
-  'Monocytes': 19509,
-  'Lymphocytes': 19509
+  'SZexample': 108604.5,
+  'BDexample': 14536.05,
+  'IQexample': 269867,
 }
 
 num_threads = 12
