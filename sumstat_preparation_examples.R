@@ -9,6 +9,9 @@
 #Format file for PRSCS processing
 #Upodate PRS inventory in sharepoint
 
+module load R
+R
+
 #Packages
 library(data.table)
 library(dplyr)
