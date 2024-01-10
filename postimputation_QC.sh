@@ -76,14 +76,14 @@ plink --bfile $nameqc --extract $nameqc.prune.in --genome --make-just-fam --out 
 R
 library(dplyr)
 library(data.table)
-bim=fread("unimp_sexbfile.bim")
+bim=fread("sexqc.bim")
 bim$V1=gsub(23, "X", bim$V1)
 bim$V1=gsub(24, "Y", bim$V1)
 fwrite(bim,"XY.bim",sep = " ")
 quit()
 n
 
-plink --bfile unimp_sexbfile --extract XY.bim --check-sex --out sex
+plink --bfile sexqc --extract XY.bim --check-sex --out sex
 
 R
 library(data.table)
@@ -97,7 +97,7 @@ n
 #Final file
 plink --bfile $nameqc --keep heteroz.valid.sample --make-bed --out TEMP1
 plink --bfile TEMP1 --keep missingness.fam --make-bed --out TEMP2
-plink --bfile TEMP2 --make-bed --exclude dupsnps --out /farmacologia/home/farmauser/PRS/bfiles/$nameok
+plink --bfile TEMP2 --make-bed --exclude dupsnps --out $nameok
 rm TEMP* *nosex
 
 
