@@ -28,7 +28,6 @@ PRS$Freq=(PRS$FCAS*PRS$NCAS+PRS$FCON*PRS$NCON)/(PRS$NCAS+PRS$NCON) #calculate Fr
 PRS$MAF<-ifelse(PRS$Freq > .5, 1-PRS$Freq, PRS$Freq) #convert Freq to MAF. Just to filter out low MAF SNPs
 
 PRS=subset(PRS,PRS$IMPINFO<=1) #remove INFO>1 variants (chrX)
-PRS$Freq=(PRS$FCAS*PRS$NCAS+PRS$FCON*PRS$NCON)/(PRS$NCAS+PRS$NCON) #calculate Freq as an average from cases and controls
 PRS$NEFF=(4/(2*PRS$Freq*(1-PRS$Freq)*PRS$IMPINFO)-PRS$BETA^2)/PRS$SE^2
 TotalNeff=quantile(PRS$NEFF,probs = seq(0, 1, 1/5))[5] #keep this number as Neff for PRSCS
 
