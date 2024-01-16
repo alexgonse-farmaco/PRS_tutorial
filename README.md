@@ -27,7 +27,7 @@ Overwiew of the needed software, for our local computer (L) and for the cluster 
 ###Access to cluster###
 For X2Go Client and filezilla cluster access the following info is required:
 - username: farmauser
-- password: b6tSqi3gztq8
+- password: 
 - host: 161.116.221.75
 - port: 22
 
