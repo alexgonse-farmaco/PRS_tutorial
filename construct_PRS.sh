@@ -13,7 +13,7 @@ done
 
 
 #to loop through all possible phenotypes
-dir="/farmacologia/home/farmauser/weights"
+dir="/farmacologia/home/farmauser/PRS/weights"
 for folder in "$dir"/*/; do
     phenotype=$(basename "$folder")
         plink2 \
