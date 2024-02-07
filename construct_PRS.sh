@@ -14,7 +14,7 @@ done
 
 #to loop through all possible phenotypes
 module load plink/v2.0
-sample=an_trios
+sample=example
 dir="/farmacologia/home/farmauser/PRS/weights_allchr"
 for file in "$dir"/*; do
     filename=$(basename -- "$file")
