@@ -13,11 +13,15 @@ done
 
 
 #to loop through all possible phenotypes
-dir="/farmacologia/home/farmauser/PRS/weights"
-for folder in "$dir"/*/; do
-    phenotype=$(basename "$folder")
-        plink2 \
+module load plink/v2.0
+sample=an_trios
+dir="/farmacologia/home/farmauser/PRS/weights_allchr"
+for file in "$dir"/*; do
+    filename=$(basename -- "$file")
+    phenotype="$(filename%.weightsall)"    
+    plink2 \
     --bfile "/farmacologia/home/farmauser/PRS/bfiles/${sample}_OK" \
-    --score "/farmacologia/home/farmauser/PRS/weights/$phenotype/$phenotype.weightsall" 2 4 6 cols=+scoresums \
-    --out "/farmacologia/home/farmauser/PRS/sample_PRS_output/${sample}.${phenotype}"
+    --score "/farmacologia/home/farmauser/PRS/weights_allchr/$filename" 2 4 6 cols=+scoresums \
+    --out "/farmacologia/home/farmauser/PRS/sample_PRS_output/$sample.$filename"
 done
+    
