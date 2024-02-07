@@ -4,23 +4,23 @@ library(dplyr)
 
 samplename="example"
 sscorespath="/farmacologia/home/farmauser/PRS/sample_PRS_output/"
-sscores=grep(list.files(path=sscorespath),pattern = ".sscore", value = T)
+patt=paste0(samplename".*sscore")
+sscores=grep(list.files(path=sscorespath),pattern = patt, value = T)
 
-phenoty=c("ADimp","ADnrem")
-filetoread=paste0("/farmacologia/home/farmauser/PRS/sample_PRS_output/",samplename,".",phenoty[1],".sscore") #one random sscorefile to retrieve IID column
+phenoty=sub(paste0("^",example,"."),"",sscores) 
+phenoty=sub(paste0(".weightsall.sscore","$"),"",phenoty) #for all available PRS of a sample
+
+filetoread=paste0("/farmacologia/home/farmauser/PRS/sample_PRS_output/",sscores[1]) #one random sscorefile to retrieve IID column
 prslist=fread(filetoread) 
-prslist=prslist%>%dplyr::select(.,IID)
-for (pheno in phenoty){
-  phenofile=grep(list.files(path=sscorespath),pattern = pheno, value = T)
-  phenofile=grep(phenofile,pattern = ".sscore",value=T)
-  phenofile=grep(phenofile,pattern = samplename,value=T)
-  filetemp=paste0(sscorespath,phenofile)
+prslist=prslist%>%dplyr::select(.,"#FID",IID)
+for (pheno in sscores){
+  filetemp=paste0(sscorespath,pheno)
   temp=fread(filetemp)
   temp[[pheno]]=temp$SCORE1_AVG
   temp=temp%>%dplyr::select(.,pheno)
   prslist=cbind.data.frame(prslist,temp)
 }
-colnames(prslist)=c("ID",phenoty)
+colnames(prslist)=c("FID","IID",phenoty)
 prslist[,phenoty]=lapply(phenoty, function(x) scale(prslist[[x]])) #z-score the PRS (mean=0, SD=1)
 savefile=paste0("/farmacologia/home/farmauser/PRS/sample_PRS_output/",samplename,"_all_PRSCS.txt")                      
 fwrite(prslist,savefile,sep='\t')
